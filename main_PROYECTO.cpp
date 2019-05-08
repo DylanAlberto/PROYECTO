@@ -14,7 +14,7 @@ static GLuint ciudad_display_list;	//Display List for the Monito
 									//Variables de dibujo y manipulacion
 float posX = 0, posY = 2.5, posZ = -3.5, rotRodIzq = 0, rotBrIzq = 0, rotBrDer = 0, rotRodDer = 0;
 float giroMonito = 0;
-
+bool	light = false;		// Luz ON/OFF
 #define MAX_FRAMES 5
 int i_max_steps = 90;
 int i_curr_steps = 0;
@@ -90,20 +90,10 @@ int font = (int)GLUT_BITMAP_HELVETICA_18;
 
 
 //GLfloat Diffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };				// Diffuse Light Values
-GLfloat Diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };				// Diffuse Light Values
-GLfloat Specular[] = { 1.0, 1.0, 1.0, 1.0 };				// Specular Light Values
-GLfloat Position[] = { 0.0f, 7.0f, -5.0f, 0.0f };			// Light Position
-GLfloat Position2[] = { 0.0f, 0.0f, -5.0f, 1.0f };			// Light Position
-
-GLfloat m_dif1[] = { 0.0f, 0.2f, 1.0f, 1.0f };				// Diffuse Light Values
-GLfloat m_spec1[] = { 0.0, 0.0, 0.0, 1.0 };				// Specular Light Values
-GLfloat m_amb1[] = { 1, 1, 1, 1.0 };				// Ambiental Light Values
-GLfloat m_s1[] = { 18 };
-
-GLfloat m_dif2[] = { 0.8f, 0.2f, 0.0f, 1.0f };				// Diffuse Light Values
-GLfloat m_spec2[] = { 0.0, 0.0, 0.0, 1.0 };				// Specular Light Values
-GLfloat m_amb2[] = { 0.0, 0.0, 0.0, 1.0 };				// Ambiental Light Values
-GLfloat m_s2[] = { 22 };
+GLfloat LightAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f }; 			// Ambient Light Values
+GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };				// Diffuse Light Values
+GLfloat LightSpecular[] = { 1.0, 1.0, 1.0, 1.0 };				// Specular Light Values
+GLfloat LightPosition[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 CTexture text1;
 CTexture text2;
@@ -2045,7 +2035,7 @@ void parque()
 	glEnable(GL_LIGHTING);
 	glPopMatrix();
 
-	//CAMINO SKY SCREAMER JUEGO 3
+	//CAMINO 
 
 	glPushMatrix();
 	glTranslatef(0, 0.1, 52);
@@ -2458,7 +2448,6 @@ void tienda3(void)
 }
 
 
-
 GLuint createDL()
 {
 	GLuint ciudadDL;
@@ -2479,6 +2468,224 @@ GLuint createDL()
 	return(ciudadDL);
 }
 
+void rueda_fortuna(void) {
+	glPushMatrix();//rueda
+	glScalef(2,2,2);
+	glPushMatrix();//centro_rueda
+			glTranslatef(0.0, 7.0,1.5);
+			glRotatef(90,0,1,0);
+			glRotatef(juego, 1, 0, 0);
+			glScalef(3, .5, .5);
+			fig3.prisma2(text7.GLindex, text7.GLindex);
+			glScalef(.333,2,2);
+			glRotatef(-90, 0, 1, 0);
+			glTranslatef(0.0, -7.0, -1.5);
+			glPushMatrix();//rueda1
+				glPushMatrix();
+					glTranslatef(0.0,3.0, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(115, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();//POSTE_UNION_RUEDAS
+					glTranslatef(4.5, 7.0, 1.5);
+					glRotatef(90, 0, 1, 0);
+					glScalef(3, .5, .5);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();//fIN_POSTE_UNION_RUEDAS
+
+				glPushMatrix();
+					glTranslatef(3.5, 5.0, 0.0);
+					glRotatef(60,0.0,0.0,1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(115, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();//POSTE_UNION_RUEDAS
+					glTranslatef(2.3, 11.0, 1.5);
+					glRotatef(90, 0, 1, 0);
+					glScalef(3, .5, .5);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();//fIN_POSTE_UNION_RUEDAS
+
+				glPushMatrix();
+					glTranslatef(3.5, 9.0, 0.0);
+					glRotatef(120, 0.0, 0.0, 1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(115, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();//POSTE_UNION_RUEDAS
+					glTranslatef(-2.3, 11.0, 1.5);
+					glRotatef(90, 0, 1, 0);
+					glScalef(3, .5, .5);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();//fIN_POSTE_UNION_RUEDAS
+
+				glPushMatrix();
+					glTranslatef(0.0, 11.0, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(-65, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();//POSTE_UNION_RUEDAS
+					glTranslatef(-4.5, 7.0, 1.5);
+					glRotatef(90, 0, 1, 0);
+					glScalef(3, .5, .5);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();//fIN_POSTE_UNION_RUEDAS
+
+				glPushMatrix();
+					glTranslatef(-3.5, 9.0, 0.0);
+					glRotatef(60, 0.0, 0.0, 1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(-65, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();//POSTE_UNION_RUEDAS
+					glTranslatef(-2.3, 3.0, 1.5);
+					glRotatef(90, 0, 1, 0);
+					glScalef(3, .5, .5);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();//fIN_POSTE_UNION_RUEDAS
+
+				glPushMatrix();
+					glTranslatef(-3.5, 5.0, 0.0);
+					glRotatef(120, 0.0, 0.0, 1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(-65, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();//POSTE_UNION_RUEDAS
+					glTranslatef(2.3, 3.0, 1.5);
+					glRotatef(90, 0, 1, 0);
+					glScalef(3, .5, .5);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();//fIN_POSTE_UNION_RUEDAS
+
+			glPopMatrix();//Rueda1
+	
+			glPushMatrix();//rueda2
+				glTranslatef(0.0,0.0,3.0);
+				glPushMatrix();
+					glTranslatef(0.0, 3.0, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(115, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(3.5, 5.0, 0.0);
+					glRotatef(60, 0.0, 0.0, 1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(115, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(3.5, 9.0, 0.0);
+					glRotatef(120, 0.0, 0.0, 1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(115, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(0.0, 11.0, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(-65, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(-3.5, 9.0, 0.0);
+					glRotatef(60, 0.0, 0.0, 1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(-65, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+
+				glPushMatrix();
+					glTranslatef(-3.5, 5.0, 0.0);
+					glRotatef(120, 0.0, 0.0, 1.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+					//DIAGONAL
+					glScalef(.25, 2, 10);
+					glRotatef(-65, 0.0, 0.0, 1.0);
+					glTranslatef(1.6, -1.7, 0.0);
+					glScalef(5, .5, .1);
+					fig3.prisma2(text7.GLindex, text7.GLindex);
+				glPopMatrix();
+			glPopMatrix();//Rueda2
+	glPopMatrix();//centro_rueda
+		glTranslatef(0, 0.0, 1.5);
+		glScalef(.5, 14, .5);
+		fig3.prisma2(text7.GLindex, text7.GLindex);
+	glPopMatrix();//fin_rueda
+}
+
 void InitGL(GLvoid)     // Inicializamos parametros
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);				// Negro de fondo	
@@ -2486,19 +2693,16 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	glEnable(GL_TEXTURE_2D);
 
 	glShadeModel(GL_SMOOTH);
-
-	glLightfv(GL_LIGHT1, GL_POSITION, Position);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, Diffuse);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
+	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, LightSpecular);
+	glEnable(GL_LIGHT1);
 
 	glClearDepth(1.0f);									// Configuramos Depth Buffer
 	glEnable(GL_DEPTH_TEST);							// Habilitamos Depth Testing
 	glDepthFunc(GL_LEQUAL);								// Tipo de Depth Testing a realizar
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-	glEnable(GL_AUTO_NORMAL);
-	glEnable(GL_NORMALIZE);
 
 
 	text1.LoadBMP("sky.bmp");
@@ -2584,7 +2788,7 @@ void InitGL(GLvoid)     // Inicializamos parametros
 	text25.BuildGLTexture();
 	text25.ReleaseImage();
 	
-	//NEW////////////////////////////////////////////
+	//keyframes
 	KeyFrame[0].arriba = 0;
 	KeyFrame[0].horizontal = 0;
 	KeyFrame[0].vertical = 1.4;
@@ -2614,7 +2818,7 @@ void InitGL(GLvoid)     // Inicializamos parametros
 
 	//END NEW//////////////////////////////
 
-	objCamera.Position_Camera(0, 2.5f, 3, 0, 2.5f, 0, 0, 1, 0);
+	objCamera.Position_Camera(0, 3.0f, 3, 0, 2.5f, 0, 0, 1, 0);
 
 	//NEW Crear una lista de dibujo
 	ciudad_display_list = createDL();
@@ -2656,10 +2860,9 @@ void pintaTexto(float x, float y, float z, void *font, char *string)
 void display(void)   // Creamos la funcion donde se dibuja
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	glLoadIdentity();
-
-
+	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);			// Position The Light
+	glEnable(GL_LIGHTING);
 
 
 	glPushMatrix();
@@ -2673,15 +2876,16 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 
 	glPushMatrix();
-	glPushMatrix(); //Caja cielo
+	glPushMatrix(); //Cielo
 	glDisable(GL_LIGHTING);
 	glTranslatef(0, 60 , 0);
 	fig1.skybox(180.0, 150.0, 180.0, text1.GLindex);
 	glEnable(GL_LIGHTING);
 	glPopMatrix();
 
-
-
+	glPushMatrix();//rueda
+		rueda_fortuna();
+	glPopMatrix();//fin rueda
 	glPushMatrix();
 	glEnable(GL_COLOR_MATERIAL);
 	glColor3f(1, 1, 1);
@@ -2723,8 +2927,9 @@ glPushMatrix();
 glTranslatef(horizontal, vertical, profundidad);
 carrito();
 glPopMatrix();
+glPopMatrix();
 
-	glPopMatrix();
+
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glColor3f(1.0, 0.0, 1.0);
@@ -2748,7 +2953,7 @@ void animacion()
 
 	if (dwElapsedTime >= 30)
 	{
-		juego = (juego - 11) % 360;
+		juego = (juego - 1) % 360;
 		
 		
 
@@ -2950,8 +3155,7 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 		break;
 
 	case 'b':
-		rotRodIzq++;
-		printf("%f \n", rotRodIzq);
+		light = !light;
 		break;
 
 	case 'B':
